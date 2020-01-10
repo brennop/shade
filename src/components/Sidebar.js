@@ -1,27 +1,33 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import styled from 'styled-components';
 import Layer from './Layer';
-import '../styles.css';
+import {LayersContext} from '../context/Layers'
 
-const Sidebar = ({layers, setLayers, newLayer, setCurrent}) => {
-  const handleClose = index => {
-    setLayers(l => l.filter((v, i) => i !== index));
-    setCurrent(c => --c);
-  };
+const Container = styled.div`
+  padding: 1rem;
+  width: 12rem;
+  height: 100%;
+  float: right;
+  background-color: var(--dark);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+` 
+
+const Sidebar = ({shader}) => {
+  const {state, dispatch} = useContext(LayersContext);
+
   return (
-    <div className="sidebar">
-      <button className="btn" onClick={newLayer}>
+    <Container>
+      <button className="btn" onClick={() => dispatch({type: 'ADD_LAYER', shader: shader}) }>
         +
       </button>
-      {layers &&
-        layers.map((layer, index) => (
-          <Layer
-            key={layer.id}
-            color={layer.color}
-            close={() => handleClose(index)}
-            select={() => setCurrent(index)}
-          />
+      {state.layers &&
+        state.layers.map((layer, index) => (
+          <Layer key={layer.name}/>
         ))}
-    </div>
+    </Container>
   );
 };
 
