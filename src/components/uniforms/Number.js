@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {LayersContext} from '../../context/Layers';
 import styled from 'styled-components';
-import {UniformWrapper} from '../styles';
 
 const Input = styled.input`
   color: #e2e2e2;
@@ -22,11 +21,11 @@ const Range = styled.input`
 
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
-    border: 2px solid #333;
+    border: 2px solid #373737;
     height: 16px;
     width: 16px;
     border-radius: 100%;
-    background: #2c2c2c;
+    background: #323232;
     margin-top: -6px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
     cursor: pointer;
   }
@@ -38,7 +37,7 @@ const Range = styled.input`
   }
 `;
 
-const Wrapper = styled(UniformWrapper)`
+const Wrapper = styled.div`
   display: flex;
 `;
 

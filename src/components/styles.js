@@ -22,7 +22,6 @@ export const Button = styled.button`
   border: none;
   background-color: #1c1c1c80;
   color: #e2e2e2;
-  padding: 0.4rem;
   outline: none;
   transition: 0.2s ease-in;
 
@@ -33,9 +32,16 @@ export const Button = styled.button`
 `;
 
 export const UniformWrapper = styled.div`
-  background-color: #212121;
+  background-color: #313139;
   box-sizing: border-box;
   width: 100%;
   overflow: hidden;
   padding: 0.4rem;
 `;
+
+export const UniformName = styled.p`
+  font-family: 'Roboto', sans-serif;
+  color: #0a0a0a;
+  font-size: 0.8em;
+  margin: 0;
+`

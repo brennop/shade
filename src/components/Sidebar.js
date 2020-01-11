@@ -10,7 +10,7 @@ const Container = styled.div`
   width: 12rem;
   height: 100%;
   float: right;
-  background-color: #2f2f2f;
+  background-color: #44444f;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;

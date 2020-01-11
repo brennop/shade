@@ -7,7 +7,8 @@ import {Uniform} from './uniforms';
 const Container = styled.div`
   width: 100%;
   margin-top: 0.8rem;
-  min-height: 0.8rem;
+  min-height: 2rem;
+  background-color: #313139;
 `;
 
 const Bar = styled.div`
@@ -15,6 +16,7 @@ const Bar = styled.div`
   padding: 0.2rem;
   display: flex;
   justify-content: flex-end;
+  height: 0.8rem;
 `;
 
 const Layer = ({index}) => {

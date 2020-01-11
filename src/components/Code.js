@@ -5,13 +5,13 @@ import styled from 'styled-components';
 const CodeArea = styled.textarea`
   box-sizing: border-box;
   font-family: 'Courier Prime', monospace;
-  font-size: 0.8em;
+  font-size: 0.75em;
   padding: 1.6rem;
   height: 100%;
-  width: 16rem;
+  width: 20rem;
   float: right;
   color: #e2e2e2;
-  background-color: #484848;
+  background-color: #34343c;
   border: none;
   outline: none;
   resize: none;
