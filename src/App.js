@@ -14,11 +14,12 @@ const App = () => {
   }, []);
 
   return (
-    <LayersProvider>
+    <LayersProvider shader={shader}>
       <Layout>
         <Board>
           <div ref={canvas}></div>
         </Board>
+        <Code />
         <Sidebar shader={shader}/>
       </Layout>
     </LayersProvider>

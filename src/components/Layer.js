@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import styled from 'styled-components';
 import {Button} from './styles';
+import {LayersContext} from '../context/Layers';
 
 const Container = styled.div`
   width: 100%;
@@ -15,12 +16,15 @@ const Bar = styled.div`
   justify-content: flex-end;
 `;
 
-const Layer = ({color, close, select}) => (
-  <Container>
-    <Bar>
-      <Button>x</Button>
-    </Bar>
-  </Container>
-);
+const Layer = ({index}) => {
+  const {state, dispatch} = useContext(LayersContext);
 
+  return (
+    <Container>
+      <Bar onClick={() => dispatch({type: 'CHANGE_CURRENT', value: index})}>
+        <Button>x</Button>
+      </Bar>
+    </Container>
+  );
+};
 export default Layer;

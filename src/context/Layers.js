@@ -3,16 +3,51 @@ import React, {createContext, useReducer, useEffect} from 'react';
 export const LayersContext = createContext();
 
 const reducer = (state, action) => {
-  const {layers, current} = state;
+  const {layers, current, shader} = state;
   switch (action.type) {
     case 'ADD_LAYER':
-      return {...state, layers: layers.concat(addLayer(action.shader, layers.length))};
+      return {
+        ...state,
+        layers: layers.concat(addLayer(action.shader, layers.length)),
+      };
+    case 'CHANGE_CURRENT':
+      return {...state, current: action.value};
+    case 'SET_SHADER':
+      return {...state, shader: action.value};
+    case 'CHANGE_FRAG':
+      return {
+        ...state,
+        layers: layers.map((l, i) =>
+          i === current ? recreate(l, action.value, shader) : l,
+        ),
+      };
     default:
       return state;
   }
 };
 
-const addLayer = ( shader, index ) => {
+const recreate = (l, value, shader) => {
+  l.frag = value;
+  l.render = shader({
+    vert: `
+  attribute vec2 position;
+  varying vec2 uv;
+  void main() {
+    uv = 0.5 * (position + 1.0);
+    gl_Position = vec4(position, 0, 1);
+  }`,
+    frag: (context, props) => props.frag,
+
+    attributes: {
+      position: [-4, -4, 4, -4, 0, 4],
+    },
+
+    count: 3,
+  });
+  return l;
+};
+
+const addLayer = (shader, index) => {
   const frag = `precision mediump float;
 void main() {
   gl_FragColor = vec4(1);
@@ -27,7 +62,7 @@ void main() {
     gl_Position = vec4(position, 0, 1);
   }`,
 
-    frag: frag,
+    frag: (context, props) => props.frag,
 
     attributes: {
       position: [-4, -4, 4, -4, 0, 4],
@@ -36,19 +71,24 @@ void main() {
     count: 3,
   });
 
-   // TODO: refactor to validate layer name
-  return {name: 'layer' + index, render, frag, uniforms: [], values: {}};
+  // TODO: refactor to validate layer name
+  return {name: 'layer' + index, render, frag, uniforms: [], values: {b: 8}};
 };
 
-export const LayersProvider = ({children}) => {
-  const [state, dispatch] = useReducer(reducer, {layers: [], current: -1});
+export const LayersProvider = ({children, shader}) => {
+  const [state, dispatch] = useReducer(reducer, {
+    layers: [],
+    current: -1,
+    shader: null,
+  });
+
+  useEffect(() => dispatch({type: 'SET_SHADER', value: shader}), [shader]);
 
   useEffect(() => {
     try {
-      state.layers.map(({render}) => render())
-    } catch(e) {
-    }
-  }, [state.layers])
+      state.layers.map(({render, frag, values}) => render({frag, values}));
+    } catch (e) {}
+  }, [state.layers]);
 
   return (
     <LayersContext.Provider value={{state, dispatch}}>
