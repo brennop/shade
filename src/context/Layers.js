@@ -21,14 +21,27 @@ const reducer = (state, action) => {
           i === current ? recreate(l, action.value, shader) : l,
         ),
       };
+    case 'CHANGE_VALUE':
+      return {
+        ...state,
+        layers: layers.map((l, i) =>
+          i === action.index ? changeValue(l, action.name, action.value) : l,
+        ),
+      };
     default:
       return state;
   }
 };
 
+const changeValue = (l, name, value) => {
+  // {...l, values: {...l.values, [action.name] : action.value}}
+  l.values[name] = value;
+  return l;
+};
+
 const recreate = (l, value, shader) => {
   l.frag = value.code;
-
+  l.uniforms = value.uniforms;
   l.render = shader({
     vert: `
   attribute vec2 position;
@@ -40,7 +53,13 @@ const recreate = (l, value, shader) => {
     frag: (context, props) => props.frag,
 
     // Could also be done with Object.fromEntries
-    uniforms: value.uniforms.reduce((obj, {name}) => ({...obj, [ name ]: (context, props) => props.values[name]}), {}),
+    uniforms: value.uniforms.reduce(
+      (obj, {name}) => ({
+        ...obj,
+        [name]: (context, props) => props.values[name],
+      }),
+      {},
+    ),
 
     attributes: {
       position: [-4, -4, 4, -4, 0, 4],

@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {Layout, Board} from './components/styles';
-import { LayersProvider } from './context/Layers'
+import {LayersProvider} from './context/Layers';
 import Sidebar from './components/Sidebar';
 import Code from './components/Code';
 import regl from 'regl';
@@ -20,7 +20,7 @@ const App = () => {
           <div ref={canvas}></div>
         </Board>
         <Code />
-        <Sidebar shader={shader}/>
+        <Sidebar shader={shader} />
       </Layout>
     </LayersProvider>
   );

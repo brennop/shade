@@ -1,12 +1,12 @@
 import React, {useContext} from 'react';
 import styled from 'styled-components';
 import Layer from './Layer';
-import {LayersContext} from '../context/Layers'
-import {Button} from './styles'
+import {LayersContext} from '../context/Layers';
+import {Button} from './styles';
 
 const Container = styled.div`
   box-sizing: border-box;
-  padding: 1rem;
+  padding: 0.6rem;
   width: 12rem;
   height: 100%;
   float: right;
@@ -15,19 +15,19 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-end;
-` 
+`;
 
 const Sidebar = ({shader}) => {
   const {state, dispatch} = useContext(LayersContext);
 
   return (
     <Container>
-      <Button onClick={() => dispatch({type: 'ADD_LAYER', shader: shader}) }>
+      <Button onClick={() => dispatch({type: 'ADD_LAYER', shader: shader})}>
         +
       </Button>
       {state.layers &&
         state.layers.map((layer, index) => (
-          <Layer key={layer.name} index={index}/>
+          <Layer key={layer.name} index={index} />
         ))}
     </Container>
   );

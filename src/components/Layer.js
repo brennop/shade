@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import styled from 'styled-components';
 import {Button} from './styles';
 import {LayersContext} from '../context/Layers';
+import {Uniform} from './uniforms';
 
 const Container = styled.div`
   width: 100%;
@@ -24,6 +25,9 @@ const Layer = ({index}) => {
       <Bar onClick={() => dispatch({type: 'CHANGE_CURRENT', value: index})}>
         <Button>x</Button>
       </Bar>
+      {state.layers[index].uniforms.map(({name, type}) => (
+        <Uniform name={name} type={type} index={index} />
+      ))}
     </Container>
   );
 };

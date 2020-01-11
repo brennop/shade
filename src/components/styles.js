@@ -24,8 +24,18 @@ export const Button = styled.button`
   color: #e2e2e2;
   padding: 0.4rem;
   outline: none;
+  transition: 0.2s ease-in;
 
-  & :hover {
+  &:hover {
     background-color: #35353580;
+    transition: 0.2s ease-out;
   }
-`
+`;
+
+export const UniformWrapper = styled.div`
+  background-color: #212121;
+  box-sizing: border-box;
+  width: 100%;
+  overflow: hidden;
+  padding: 0.4rem;
+`;

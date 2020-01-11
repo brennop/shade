@@ -34,7 +34,7 @@ const Code = () => {
       .filter(line => line.startsWith('uniform') && line.endsWith(';'))
       .map(line => line.slice(0, -1).split(' '))
       .filter(line => line.length === 3)
-      .map(words => ({name: words[2], type: words[1]}))
+      .map(words => ({name: words[2], type: words[1]}));
 
     dispatch({type: 'CHANGE_FRAG', value: {code, uniforms}});
   }, [code, dispatch]);
