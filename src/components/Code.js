@@ -15,16 +15,29 @@ const CodeArea = styled.textarea`
   border: none;
   outline: none;
   resize: none;
-`
+`;
 
 const Code = () => {
-  const [code, setCode] = useState('') 
-  const {state, dispatch} = useContext(LayersContext)
+  const [code, setCode] = useState('');
+  const {state, dispatch} = useContext(LayersContext);
 
-  const handleChange = event => setCode(event.target.value)
+  const handleChange = event => setCode(event.target.value);
 
-  useEffect(() => setCode(state.current >= 0 ? state.layers[state.current].frag : ''), [state])
-  useEffect(() => dispatch({type: 'CHANGE_FRAG', value: code}), [code]);
+  useEffect(
+    () => setCode(state.current >= 0 ? state.layers[state.current].frag : ''),
+    [state],
+  );
+
+  useEffect(() => {
+    const uniforms = code
+      .split('\n')
+      .filter(line => line.startsWith('uniform') && line.endsWith(';'))
+      .map(line => line.slice(0, -1).split(' '))
+      .filter(line => line.length === 3)
+      .map(words => ({name: words[2], type: words[1]}))
+
+    dispatch({type: 'CHANGE_FRAG', value: {code, uniforms}});
+  }, [code, dispatch]);
 
   return (
     <div>

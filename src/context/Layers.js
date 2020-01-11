@@ -27,7 +27,8 @@ const reducer = (state, action) => {
 };
 
 const recreate = (l, value, shader) => {
-  l.frag = value;
+  l.frag = value.code;
+
   l.render = shader({
     vert: `
   attribute vec2 position;
@@ -37,6 +38,9 @@ const recreate = (l, value, shader) => {
     gl_Position = vec4(position, 0, 1);
   }`,
     frag: (context, props) => props.frag,
+
+    // Could also be done with Object.fromEntries
+    uniforms: value.uniforms.reduce((obj, {name}) => ({...obj, [ name ]: (context, props) => props.values[name]}), {}),
 
     attributes: {
       position: [-4, -4, 4, -4, 0, 4],
@@ -72,7 +76,7 @@ void main() {
   });
 
   // TODO: refactor to validate layer name
-  return {name: 'layer' + index, render, frag, uniforms: [], values: {b: 8}};
+  return {name: 'layer' + index, render, frag, uniforms: [], values: {}};
 };
 
 export const LayersProvider = ({children, shader}) => {
