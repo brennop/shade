@@ -28,6 +28,10 @@ const reducer = (state, action) => {
           i === action.index ? changeValue(l, action.name, action.value) : l,
         ),
       };
+    case 'REMOVE_LAYER':
+      return {
+        ...state, layers: layers.filter((l, i) => i !== action.index), current: current === action.index ? -1 : current,
+      }
     default:
       return state;
   }

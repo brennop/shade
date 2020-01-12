@@ -18,16 +18,21 @@ export const Board = styled.div`
   }
 `;
 
-export const Button = styled.button`
+export const Button = styled.div`
   border: none;
-  background-color: #1c1c1c80;
-  color: #e2e2e2;
   outline: none;
   transition: 0.2s ease-in;
+  display: flex;
+  color: #1c1c1c80;
+  font-size: 1.2em;
 
   &:hover {
-    background-color: #35353580;
+    color: #212121d0;
     transition: 0.2s ease-out;
+  }
+
+  & svg {
+    margin: auto;
   }
 `;
 

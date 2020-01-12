@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Layer from './Layer';
 import {LayersContext} from '../context/Layers';
 import {Button} from './styles';
+import {IoIosAddCircle as Add} from 'react-icons/io'
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -23,7 +24,7 @@ const Sidebar = ({shader}) => {
   return (
     <Container>
       <Button onClick={() => dispatch({type: 'ADD_LAYER', shader: shader})}>
-        +
+        <Add />
       </Button>
       {state.layers &&
         state.layers.map((layer, index) => (
