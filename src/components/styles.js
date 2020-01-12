@@ -12,10 +12,10 @@ export const Board = styled.div`
   align-items: center;
   justify-content: center;
 
-  & div {
-    height: 32em;
-    width: 32em;
-  }
+  // & >div>canvas {
+  //   height: ${props => props.height};
+  //   width: ${props => props.width};
+  // }
 `;
 
 export const Button = styled.div`
@@ -34,6 +34,17 @@ export const Button = styled.div`
   & svg {
     margin: auto;
   }
+`;
+
+export const NumberInput = styled.input`
+  font-family: 'Courier Prime', monospace;
+  color: #e2e2e2;
+  background-color: #484848;
+  width: 1.8rem;
+  padding: 0.2rem;
+  font-size: 0.8em;
+  border: none;
+  outline: none;
 `;
 
 export const UniformWrapper = styled.div`

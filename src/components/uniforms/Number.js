@@ -1,16 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {LayersContext} from '../../context/Layers';
 import styled from 'styled-components';
-
-const Input = styled.input`
-  color: #e2e2e2;
-  background-color: #484848;
-  width: 1.8rem;
-  padding: 0.2rem;
-  font-size: 0.8em;
-  border: none;
-  outline: none;
-`;
+import {NumberInput as Input} from '../styles'
 
 const Range = styled.input`
   width: 100%;

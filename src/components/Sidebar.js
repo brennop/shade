@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Layer from './Layer';
 import {LayersContext} from '../context/Layers';
 import {Button} from './styles';
-import {IoIosAddCircle as Add} from 'react-icons/io'
+import {IoIosAddCircle as Add, IoIosSettings as Cog} from 'react-icons/io';
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -18,14 +18,24 @@ const Container = styled.div`
   align-items: flex-end;
 `;
 
-const Sidebar = ({shader}) => {
+const Icons = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const Sidebar = ({openSettings}) => {
   const {state, dispatch} = useContext(LayersContext);
 
   return (
     <Container>
-      <Button onClick={() => dispatch({type: 'ADD_LAYER'})}>
-        <Add />
-      </Button>
+      <Icons>
+        <Button onClick={openSettings}>
+          <Cog />
+        </Button>
+        <Button onClick={() => dispatch({type: 'ADD_LAYER'})}>
+          <Add />
+        </Button>
+      </Icons>
       {state.layers &&
         state.layers.map((layer, index) => (
           <Layer key={layer.name} index={index} />
