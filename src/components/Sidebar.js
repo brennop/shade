@@ -23,7 +23,7 @@ const Sidebar = ({shader}) => {
 
   return (
     <Container>
-      <Button onClick={() => dispatch({type: 'ADD_LAYER', shader: shader})}>
+      <Button onClick={() => dispatch({type: 'ADD_LAYER'})}>
         <Add />
       </Button>
       {state.layers &&

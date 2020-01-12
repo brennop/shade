@@ -47,7 +47,7 @@ export const UniformWrapper = styled.div`
 export const UniformName = styled.p`
   font-family: 'Open Sans', sans-serif;
   color: #a5a5a5;
-  margin: 0 1em;
+  margin: 0 0.4rem;
   font-size: 0.8em;
   font-weight: 600;
   text-transform: capitalize;

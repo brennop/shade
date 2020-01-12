@@ -1,5 +1,6 @@
 import React from 'react';
 import Number from './Number';
+import Texture from './Texture';
 import {UniformWrapper as Wrapper, UniformName as Name} from '../styles';
 
 const Selector = props => {
@@ -7,6 +8,8 @@ const Selector = props => {
     case 'float':
     case 'int':
       return <Number {...props} />;
+    case 'sampler2D':
+      return <Texture {...props} />;
     default:
       return null;
   }

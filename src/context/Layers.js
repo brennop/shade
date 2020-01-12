@@ -8,7 +8,7 @@ const reducer = (state, action) => {
     case 'ADD_LAYER':
       return {
         ...state,
-        layers: layers.concat(addLayer(action.shader, layers.length)),
+        layers: layers.concat(addLayer(shader, layers.length)),
       };
     case 'CHANGE_CURRENT':
       return {...state, current: action.value};
