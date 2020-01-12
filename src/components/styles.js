@@ -37,16 +37,18 @@ export const Button = styled.div`
 `;
 
 export const UniformWrapper = styled.div`
-  background-color: #313139;
   box-sizing: border-box;
+  background-color: #34343c;
   width: 100%;
   overflow: hidden;
   padding: 0.4rem;
 `;
 
 export const UniformName = styled.p`
-  font-family: 'Roboto', sans-serif;
-  color: #0a0a0a;
+  font-family: 'Open Sans', sans-serif;
+  color: #a5a5a5;
+  margin: 0 1em;
   font-size: 0.8em;
-  margin: 0;
+  font-weight: 600;
+  text-transform: capitalize;
 `

@@ -9,7 +9,7 @@ const Container = styled.div`
   width: 100%;
   margin-top: 0.8rem;
   min-height: 2.4rem;
-  background-color: #313139;
+  background-color: #34343c;
 `;
 
 const Bar = styled.div`

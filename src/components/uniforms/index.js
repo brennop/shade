@@ -14,9 +14,7 @@ const Selector = props => {
 
 export const Uniform = props => (
   <Wrapper>
-    <Name>
-      {props.name}
-    </Name>
+    <Name>{props.name.replace(/([A-Z])/g, ' $1').replace(/([-_])/g, ' ')}</Name>
     <Selector {...props} />
   </Wrapper>
-)
+);

@@ -21,11 +21,11 @@ const Range = styled.input`
 
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
-    border: 2px solid #373737;
+    border: 2px solid #525252;
     height: 16px;
     width: 16px;
     border-radius: 100%;
-    background: #323232;
+    background: #414141;
     margin-top: -6px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
     cursor: pointer;
   }
@@ -33,7 +33,7 @@ const Range = styled.input`
   &::-webkit-slider-runnable-track {
     width: 100%;
     height: 2px;
-    background: #3d3d3d;
+    background: #414141;
   }
 `;
 
