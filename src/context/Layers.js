@@ -1,60 +1,53 @@
-import React, {createContext, useReducer, useEffect} from 'react';
+import React, { createContext, useReducer, useEffect } from "react";
 
 export const LayersContext = createContext();
 
 const reducer = (state, action) => {
-  const {layers, current, shader, settings} = state;
+  const { layers, current, shader, settings } = state;
   switch (action.type) {
-    case 'ADD_LAYER':
+    case "ADD_LAYER":
       const newLayer = addLayer(shader, layers.length, settings);
       return {
         ...state,
         layers: layers.concat(newLayer),
         settings: {
           ...settings,
-          main: settings.main === null ? 0 : settings.main,
-        },
+          main: settings.main === null ? 0 : settings.main
+        }
       };
-    case 'CHANGE_CURRENT':
-      return {...state, current: action.value};
-    case 'SET_SHADER':
-      return {...state, shader: action.value};
-    case 'CHANGE_FRAG':
+    case "CHANGE_CURRENT":
+      return { ...state, current: action.value };
+    case "SET_SHADER":
+      return { ...state, shader: action.value };
+    case "CHANGE_FRAG":
       return {
         ...state,
         layers: layers.map((l, i) =>
-          i === current ? recreate(l, action.value, shader) : l,
-        ),
+          i === current ? recreate(l, action.value, shader) : l
+        )
       };
-    case 'CHANGE_VALUE':
+    case "CHANGE_VALUE":
       return {
         ...state,
         layers: layers.map((l, i) =>
-          i === action.index ? changeValue(l, action.name, action.value) : l,
-        ),
+          i === action.index ? changeValue(l, action.name, action.value) : l
+        )
       };
-    case 'REMOVE_LAYER':
+    case "REMOVE_LAYER":
       return {
         ...state,
         layers: layers.filter((l, i) => i !== action.index),
-        current: current === action.index ? -1 : current,
+        current: current === action.index ? -1 : current
       };
-    case 'SAVE_SETTINGS':
+    case "SAVE_SETTINGS":
+      console.log(action.settings)
       return {
         ...state,
         settings: action.settings,
-        layers: updateFbos(layers, action.settings),
       };
     default:
       return state;
   }
-};
-
-const updateFbos = (layers, settings) => {
-  return layers.map(layer => ({
-    ...layer,
-    fbo: layer.fbo.resize(parseInt(settings.width), parseInt(settings.height)),
-  }));
 };
 
 const changeValue = (l, name, value) => {
@@ -78,19 +71,18 @@ const recreate = (l, value, shader) => {
 
     // Could also be done with Object.fromEntries
     uniforms: value.uniforms.reduce(
-      (obj, {name}) => ({
+      (obj, { name }) => ({
         ...obj,
-        [name]: (context, props) => props.values[name],
+        [name]: (context, props) => props.values[name]
       }),
-      {},
+      {}
     ),
 
     attributes: {
-      position: [-4, -4, 4, -4, 0, 4],
+      position: [-4, -4, 4, -4, 0, 4]
     },
 
-    framebuffer: (context, props) => props.fbo,
-    count: 3,
+    count: 3
   });
   return l;
 };
@@ -109,8 +101,8 @@ void main() {
   const fbo = shader.framebuffer({
     color: shader.texture({
       width: parseInt(settings.width),
-      height: parseInt(settings.height),
-    }),
+      height: parseInt(settings.height)
+    })
   });
 
   const render = shader({
@@ -125,23 +117,22 @@ void main() {
     frag: (context, props) => props.frag,
 
     attributes: {
-      position: [-4, -4, 4, -4, 0, 4],
+      position: [-4, -4, 4, -4, 0, 4]
     },
 
-    framebuffer: (context, props) => props.fbo,
-    count: 3,
+    count: 3
   });
 
   // TODO: refactor to validate layer name
-  return {name: 'layer' + index, render, frag, uniforms: [], values: {}, fbo};
+  return { name: "layer" + index, render, frag, uniforms: [], values: {}, fbo };
 };
 
-export const LayersProvider = ({children, shader}) => {
+export const LayersProvider = ({ children, shader }) => {
   const [state, dispatch] = useReducer(reducer, {
     layers: [],
     current: -1,
     shader: null,
-    settings: {main: null, width: '512px', height: '512px'},
+    settings: { main: 0, width: "512px", height: "512px" }
   });
 
   const main =
@@ -166,33 +157,39 @@ export const LayersProvider = ({children, shader}) => {
   }`,
 
       attributes: {
-        position: [-4, -4, 4, -4, 0, 4],
+        position: [-4, -4, 4, -4, 0, 4]
       },
       uniforms: {
-        fbo: (context, props) => props.fbo,
+        fbo: (context, props) => props.fbo
       },
 
-      count: 3,
+      count: 3
     });
 
-  useEffect(() => dispatch({type: 'SET_SHADER', value: shader}), [shader]);
+  useEffect(() => dispatch({ type: "SET_SHADER", value: shader }), [shader]);
 
   useEffect(() => {
-    try {
-        state.shader.clear({
-          color: [0, 0, 0, 255],
-          framebuffer: state.layers[state.settings.main].fbo,
-          depth: 1,
-        });
-      state.layers.map(({render, frag, values, fbo}) => {
-        render({frag, values, fbo})
+    state.layers.map(({ render, frag, values, fbo }) => {
+      state.shader.clear({
+        color: [0, 0, 0, 0],
+        framebuffer: fbo,
+        depth: 1
       });
-      main({fbo: state.layers[state.settings.main].fbo});
-    } catch (e) {}
-  }, [state.layers, main, state.settings]);
+
+      fbo.use( () => {
+      try {
+        render({frag, values});
+      } catch (e) {
+      }
+      })
+    });
+    if (state.layers.length > 0) {
+      main({ fbo: state.layers[state.settings.main].fbo });
+    }
+  }, [state]);
 
   return (
-    <LayersContext.Provider value={{state, dispatch}}>
+    <LayersContext.Provider value={{ state, dispatch }}>
       {children}
     </LayersContext.Provider>
   );

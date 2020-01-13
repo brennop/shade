@@ -2,7 +2,7 @@ body {
   margin: 0;
   box-sizing: border-box;
   background-color: #1c1c21;
-  font-family: 'Courier Prime', monospace;
+  font-family: 'Open Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -10,4 +10,8 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+input {
+  font-family: 'Courier Prime', monospace;
 }
