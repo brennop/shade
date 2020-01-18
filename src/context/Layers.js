@@ -169,7 +169,7 @@ export const LayersProvider = ({children, shader}) => {
   useEffect(() => dispatch({type: 'SET_SHADER', value: shader}), [shader]);
 
   useEffect(() => {
-    state.layers.map(({render, frag, values, fbo}) => {
+    state.layers.slice().reverse().map(({render, frag, values, fbo}) => {
       state.shader.clear({
         color: [0, 0, 0, 0],
         framebuffer: fbo,
