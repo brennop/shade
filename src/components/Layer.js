@@ -4,6 +4,7 @@ import { Button } from "./styles";
 import { LayersContext } from "../context/Layers";
 import { Uniform } from "./uniforms";
 import { IoIosCloseCircle as Close } from "react-icons/io";
+import {useDrag} from 'react-dnd'
 
 const Container = styled.div`
   width: 100%;
@@ -29,6 +30,10 @@ const Name = styled.span`
 
 const Layer = ({ index }) => {
   const { state, dispatch } = useContext(LayersContext);
+  const [{isDragging}, drag] = useDrag({
+    item: {type: 'layer', fbo: state.layers[index].fbo, name: state.layers[index].name},
+    collect: monitor => ({isDragging: monitor.isDragging()})
+  })
 
   const handleClose = event => {
     event.stopPropagation();
@@ -36,7 +41,7 @@ const Layer = ({ index }) => {
   };
 
   return (
-    <Container>
+    <Container ref={drag}>
       <Bar onClick={() => dispatch({ type: "CHANGE_CURRENT", value: index })}>
         <Name>{state.layers[index].name}</Name>
         <Button onClick={handleClose}>
@@ -44,7 +49,7 @@ const Layer = ({ index }) => {
         </Button>
       </Bar>
       {state.layers[index].uniforms.map(({ name, type }) => (
-        <Uniform name={name} type={type} index={index} />
+        <Uniform name={name} type={type} index={index} key={name}/>
       ))}
     </Container>
   );

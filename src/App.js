@@ -3,8 +3,11 @@ import {Layout} from './components/styles';
 import Board from './components/Board';
 import {LayersProvider} from './context/Layers';
 import Sidebar from './components/Sidebar';
-import Settings from './components/Settings'
+import Settings from './components/Settings';
 import Code from './components/Code';
+import {DndProvider} from 'react-dnd';
+// Maybe move this to Layer.js
+import Backend from 'react-dnd-html5-backend';
 import regl from 'regl';
 
 const App = () => {
@@ -13,18 +16,24 @@ const App = () => {
   const [showSettings, setShowSettings] = useState(false);
 
   useEffect(() => {
-    setShader(() => regl(canvas.current));
+    const gl = canvas.current.getContext('webgl', {preserveDrawingBuffer: true})
+    setShader(() => regl(gl));
   }, []);
 
   return (
-    <LayersProvider shader={shader}>
-      <Layout>
-        <Board _ref={canvas} />
-        <Code />
-        <Sidebar openSettings={() => setShowSettings(true)} />
-      </Layout>
-      <Settings isOpen={showSettings} handleClose={() => setShowSettings(false)}/>
-    </LayersProvider>
+    <DndProvider backend={Backend}>
+      <LayersProvider shader={shader}>
+        <Layout>
+          <Board _ref={canvas} />
+          <Code />
+          <Sidebar openSettings={() => setShowSettings(true)} />
+        </Layout>
+        <Settings
+          isOpen={showSettings}
+          handleClose={() => setShowSettings(false)}
+        />
+      </LayersProvider>
+    </DndProvider>
   );
 };
 
