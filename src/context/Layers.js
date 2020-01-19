@@ -51,7 +51,6 @@ const reducer = (state, action) => {
 
 const changeValue = (l, name, value) => {
   // {...l, values: {...l.values, [action.name] : action.value}}
-  console.log(name, value);
   l.values[name] = value;
   return l;
 };

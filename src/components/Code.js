@@ -35,6 +35,7 @@ const Code = () => {
       theme: 'ace/theme/vibrant_ink',
       enableLiveAutocompletion: true,
       showGutter: false,
+      highlightActiveLine: false,
     });
 
     editor.on('change', e => setCode(editor.getValue()))

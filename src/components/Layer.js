@@ -30,7 +30,7 @@ const Name = styled.span`
 
 const Layer = ({ index }) => {
   const { state, dispatch } = useContext(LayersContext);
-  const [{isDragging}, drag] = useDrag({
+  const [{isDragging}, drag, preview] = useDrag({
     item: {type: 'layer', fbo: state.layers[index].fbo, name: state.layers[index].name},
     collect: monitor => ({isDragging: monitor.isDragging()})
   })
@@ -41,8 +41,8 @@ const Layer = ({ index }) => {
   };
 
   return (
-    <Container ref={drag}>
-      <Bar onClick={() => dispatch({ type: "CHANGE_CURRENT", value: index })}>
+    <Container ref={preview}>
+      <Bar ref={drag} onClick={() => dispatch({ type: "CHANGE_CURRENT", value: index })}>
         <Name>{state.layers[index].name}</Name>
         <Button onClick={handleClose}>
           <Close />
