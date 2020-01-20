@@ -1,8 +1,15 @@
 {
   "name": "shade",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "main": "public/electron.js",
+  "homepage": "./",
+  "build": {
+    "appId": "wtf.brn.shade",
+    "directories": {
+      "buildResources": "build"
+    }
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -26,7 +33,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\""
+    "dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -46,7 +55,7 @@
   "devDependencies": {
     "concurrently": "^5.0.2",
     "electron": "^7.1.7",
-    "electron-builder": "^21.2.0",
+    "electron-builder": "^22.2.0",
     "wait-on": "^3.3.0"
   }
 }
