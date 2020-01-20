@@ -3,28 +3,18 @@ import {LayersContext} from '../context/Layers';
 import styled from 'styled-components';
 import ace from 'ace-builds';
 import "ace-builds/src-noconflict/mode-glsl";
-import "ace-builds/src-noconflict/theme-vibrant_ink";
+import "ace-builds/src-noconflict/theme-tomorrow_night";
 import "ace-builds/src-noconflict/ext-language_tools";
-
-// const CodeArea = styled.textarea`
-//   box-sizing: border-box;
-//   font-family: 'Courier Prime', monospace;
-//   font-size: 0.75em;
-//   padding: 1.6rem;
-//   height: 100%;
-//   width: 20rem;
-//   float: right;
-//   color: #e2e2e2;
-//   background-color: #34343c;
-//   border: none;
-//   outline: none;
-//   resize: none;
-// `;
 
 const Editor = styled.div`
   height: 100%;
-  width: 20rem;
 `;
+
+const Wrapper = styled.div`
+  padding: 1em;
+  width: 18rem;
+  background-color: #1d1f21;
+`
 
 const Code = () => {
   const [code, setCode] = useState('');
@@ -32,9 +22,13 @@ const Code = () => {
   const {state, dispatch} = useContext(LayersContext);
     const editor = ace.edit(textarea.current, {
       mode: 'ace/mode/glsl',
-      theme: 'ace/theme/vibrant_ink',
+      theme: 'ace/theme/tomorrow_night',
       enableLiveAutocompletion: true,
       showGutter: false,
+      showPrintMargin: false,
+      wrap: true,
+      fontFamily: "Inconsolata",
+      fontSize: "14px",
       highlightActiveLine: false,
     });
 
@@ -58,9 +52,9 @@ const Code = () => {
   }, [code, dispatch]);
 
   return (
-    <div>
+    <Wrapper>
       <Editor ref={textarea} />
-    </div>
+    </Wrapper>
   );
 };
 

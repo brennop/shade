@@ -3,7 +3,7 @@ const path = require('path');
 const isDev = require('electron-is-dev');
 
 let win;
-Menu.setApplicationMenu(null);
+if(!isDev) Menu.setApplicationMenu(null);
 
 function createWindow() {
   // Create the browser window.
